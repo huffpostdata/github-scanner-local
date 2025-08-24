@@ -7,6 +7,7 @@ Locally scan all the repositories of a github organization.
 - Clone below repositories as same location as github-scanner-local
   - [gh-crawl](https://github.com/arshadkazmi42/gh-crawl) 
   - [bash-scripts](https://github.com/arshadkazmi42/bash-scripts)
+  - [is-broken](https://github.com/arshadkazmi42/is-broken-link-github)
 
 - Install [npm-name-cli](https://github.com/sindresorhus/npm-name-cli) globally
 - Install [get-dependencies](https://github.com/SharonGrossman/get-dependencies) globally 
