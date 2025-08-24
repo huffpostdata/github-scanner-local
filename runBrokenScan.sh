@@ -23,7 +23,7 @@ rm -rf $RESULTS_DIR/temp.txt
 cd ../is-broken-link-github/
 sh urls.sh ../github-scanner-local/$RESULTS_DIR/$1.txt | tee -a ../github-scanner-local/$RESULTS_DIR/$1-broken-github.txt
 cd ../github-scanner-local
-cat $RESULTS_DIR/$1.txt | grep -v 'github.com' | grep -v 'bitbucket.org' | xargs -n1 -P100 -I {} sh ../bash-scripts/curl/scan-broken.sh {} | tee -a $RESULTS_DIR/$1-broken.txt
+cat $RESULTS_DIR/$1.txt | grep -v 'github.com' | grep -v 'bitbucket.org' | xargs -P100 -I {} sh ../bash-scripts/curl/scan-broken.sh {} | tee -a $RESULTS_DIR/$1-broken.txt
 
 # Get Broken Links
 cat $RESULTS_DIR/$1-broken.txt | grep BROKEN | sed -r "s/\x1B\[([0-9]{1,3}(;[0-9]{1,2})?)?[mGK]//g" | tee -a $RESULTS_DIR/$1-broken-links.txt
@@ -32,11 +32,11 @@ cat $RESULTS_DIR/$1-broken.txt | grep -v "ajax.googleapis.com\|awscli.amazonaws.
 
 # Dependencies
 ## NPM
-cat $NPM_DIR/$1.txt | awk -F '/' '{print tolower($1)}' | sort | uniq | xargs -n1 -P5 -I {} npm-name {} | sed -r "s/\x1B\[([0-9]{1,3}(;[0-9]{1,2})?)?[mGK]//g" | tee -a $NPM_DIR/$1-available.txt
+cat $NPM_DIR/$1.txt | awk -F '/' '{print tolower($1)}' | sort | uniq | xargs -P5 -I {} npm-name {} | sed -r "s/\x1B\[([0-9]{1,3}(;[0-9]{1,2})?)?[mGK]//g" | tee -a $NPM_DIR/$1-available.txt
 cat $NPM_DIR/$1-available.txt | grep "✔" | tee -a $NPM_DIR/$1-available-package.txt
 
 ## Pip
-cat $PIP_DIR/$1.txt | awk -F '/' '{print $1}' | xargs -n1 -P5 -I {} sh pip-name.sh {} | sed -r "s/\x1B\[([0-9]{1,3}(;[0-9]{1,2})?)?[mGK]//g" | tee -a $PIP_DIR/$1-available.txt
+cat $PIP_DIR/$1.txt | awk -F '/' '{print $1}' | xargs -P5 -I {} sh pip-name.sh {} | sed -r "s/\x1B\[([0-9]{1,3}(;[0-9]{1,2})?)?[mGK]//g" | tee -a $PIP_DIR/$1-available.txt
 cat $PIP_DIR/$1-available.txt | grep "is available" | tee -a $PIP_DIR/$1-available-package.txt
 
 # Workflows
